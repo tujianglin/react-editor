@@ -1,0 +1,29 @@
+import editorStore from '@/Editor/store/editorStore';
+import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
+import { LayerItem } from '@/packages/types/component';
+import { Divider, Flex, Form, Input } from 'antd';
+import { observer } from 'mobx-react';
+import { I{{name}} } from './default';
+
+const {{name}}Config = observer(({ properties, id, name }: LayerItem<I{{name}}>) => {
+  const { updateCurLayer } = editorStore!;
+  return (
+    <Form labelAlign="left" colon={false} labelCol=\{{ span: 6 }}>
+      <Form.Item label={'名称'}>
+        <Flex align="center">
+          <Input value={name} onChange={(e) => updateCurLayer({ id, name: e.target.value })} />
+        </Flex>
+      </Form.Item>
+      <Divider className="!mt-0">属性</Divider>
+      <Form.Item label={'文本内容'}>
+        <Flex align="center">
+          <GlobalTreeSelect field="value" />
+          <Input onChange={(e) => updateCurLayer<I{{name}}>({})} />
+        </Flex>
+      </Form.Item>
+      <Divider>事件</Divider>
+    </Form>
+  );
+});
+
+export default {{name}}Config;

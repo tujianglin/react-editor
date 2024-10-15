@@ -1,0 +1,21 @@
+import { LayerItem } from '@/packages/types/component';
+import { getComponentStyle } from '@/packages/utils/style';
+import { observer } from 'mobx-react';
+import { CSSProperties } from 'react';
+import { I{{name}} } from './default';
+
+const {{name}} = observer(({ properties }: LayerItem<I{{name}}>) => {
+  const style = () => {
+    const result = {
+      ...getComponentStyle(properties),
+    };
+    return result as CSSProperties;
+  };
+  return (
+    <div style={style()}>
+      111
+    </div>
+  );
+});
+
+export default {{name}};
