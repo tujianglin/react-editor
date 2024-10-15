@@ -4,6 +4,8 @@ function getBoxShadow(name: string) {
   switch (name) {
     case 'sm':
       return '0 2px 12px 0 #0000001a';
+    case 'bd':
+      return 'inset 0 0 0 1px #4af';
     default:
       return 'none';
   }

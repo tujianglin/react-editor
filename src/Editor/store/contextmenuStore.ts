@@ -65,13 +65,13 @@ class ContextMenuStore {
   /** 锁定 */
   onLock = () => {
     const { updateCurLayer, curLayer } = editorStore;
-    updateCurLayer({ id: curLayer.id, lock: false, directions: true, edge: true, properties: { dock: { value: 0 } } });
+    updateCurLayer({ id: curLayer.id, lock: true, directions: [], edge: [] });
     this.visible = false;
   };
   /** 解锁 */
   onUnLock = () => {
     const { updateCurLayer, curLayer } = editorStore;
-    updateCurLayer({ id: curLayer.id, lock: true, directions: [], edge: [] });
+    updateCurLayer({ id: curLayer.id, lock: false, directions: true, edge: true, properties: { dock: { value: 0 } } });
     this.visible = false;
   };
 }

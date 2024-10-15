@@ -49,12 +49,12 @@ const ContextMenu = observer(() => {
     if (curLayer?.lock) {
       menus.push({
         name: '解锁',
-        onClick: contextmenuStore.onLock,
+        onClick: contextmenuStore.onUnLock,
       });
     } else {
       menus.push({
         name: '锁定',
-        onClick: contextmenuStore.onUnLock,
+        onClick: contextmenuStore.onLock,
       });
     }
     return menus;
