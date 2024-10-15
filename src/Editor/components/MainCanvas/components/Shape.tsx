@@ -59,7 +59,12 @@ const Shape = observer(({ children, style, layer }: ShapeProps) => {
   return (
     <div
       id={layer.id}
-      className={classNames(!layer.lock ? 'layer-item' : '', layer?.id === curLayer?.id && layer?.lock ? 'shadow-bd' : 'shadow-sm', layer.pid)}
+      className={classNames(
+        // 如果锁定但是支持缩放, 那就还是拖拽组件
+        !layer.lock || (layer.edge && (layer.edge as string[])?.length) ? 'layer-item' : '',
+        layer?.id === curLayer?.id && layer?.lock ? 'shadow-bd' : 'shadow-sm',
+        layer.pid,
+      )}
       data-lock={layer.lock}
       style={style}
       onMouseDown={onMouseDown}
