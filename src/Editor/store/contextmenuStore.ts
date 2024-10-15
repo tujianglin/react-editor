@@ -22,11 +22,13 @@ class ContextMenuStore {
 
   setPosition = (position: [number, number]) => (this.position = position);
 
-  sepPointPos = ({ e, pid }) => {
-    const rectInfo = $(`#${pid}`)?.getBoundingClientRect();
+  sepPointPos = ({ e, layer }: { e: React.MouseEvent; layer: LayerItem }) => {
+    console.log(cloneDeep(layer));
+    const rectInfo = $(`#${layer.id}`)?.getBoundingClientRect();
     if (!rectInfo) return;
     const x = Math.round(e.clientX - rectInfo.x);
     const y = Math.round(e.clientY - rectInfo.y);
+    console.log([x, y]);
     this.pointPos = [x, y];
   };
 
@@ -51,8 +53,10 @@ class ContextMenuStore {
       i.properties.name.value = generateID();
     });
     const com = tree[0] as LayerItem;
-    com.properties.x.value = Math.round(this.pointPos[0] / zoom);
-    com.properties.y.value = Math.round(this.pointPos[1] / zoom);
+    const w = com.properties.width.value * zoom;
+    const h = com.properties.height.value * zoom;
+    com.properties.x.value = Math.round((this.pointPos[0] - w / 2) / zoom);
+    com.properties.y.value = Math.round((this.pointPos[1] - h / 2) / zoom);
     addLayer(com);
     this.visible = false;
   };

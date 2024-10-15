@@ -5,7 +5,6 @@ import { LayerItem } from '@/packages/types/component';
 import { $ } from '@/utils';
 import classNames from 'classnames';
 import { observer } from 'mobx-react';
-import { useEffect } from 'react';
 interface ShapeProps {
   children: React.ReactNode;
   style: React.CSSProperties;
@@ -14,11 +13,12 @@ interface ShapeProps {
 const Shape = observer(({ children, style, layer }: ShapeProps) => {
   const { setCurLayer, curLayer } = editorStore!;
   const { setSelectedTargets, selectedTargets, moveableRef } = eventStore!;
-  const { updateVisible, setPosition } = contextmenuStore;
+  const { updateVisible, setPosition, sepPointPos } = contextmenuStore;
   const onMouseDown = (event: React.MouseEvent) => {
     const e = event.nativeEvent;
     event.stopPropagation();
     console.log('Shape');
+    sepPointPos({ e: event, layer });
     if (layer) {
       const targets = [];
       // 容器内组件多选定义
@@ -50,12 +50,7 @@ const Shape = observer(({ children, style, layer }: ShapeProps) => {
     updateVisible(true);
     setPosition([e.clientX, e.clientY]);
   };
-  useEffect(() => {
-    // 如果是流式布局,就取消 moveable 的选中状态
-    if (layer.lock) {
-      setSelectedTargets([]);
-    }
-  }, [layer.lock]);
+
   return (
     <div
       id={layer.id}

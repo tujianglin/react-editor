@@ -15,8 +15,8 @@ interface LayerContainterProps {
 
 const LayerContainter = observer(({ children, style, layer, containerType }: LayerContainterProps) => {
   const { setCurLayer, addLayer, curLayer } = editorStore;
-  const { moveableRef } = eventStore;
-  const { updateVisible } = contextmenuStore;
+  const { moveableRef, zoom } = eventStore;
+  const { updateVisible, sepPointPos } = contextmenuStore;
   const onDrop = (event: React.DragEvent) => {
     const e = event.nativeEvent;
     event.preventDefault();
@@ -25,7 +25,6 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
     const rectInfo = $(`#${layer?.id ? 'viewport_' + layer.id : 'viewport'}`).getBoundingClientRect();
     const com = EditorLoader.definitionMap[type]?.getInitConfig() as LayerItem;
     if (!type) return;
-    const { zoom } = eventStore;
     const w = com.properties.width.value * zoom;
     const h = com.properties.height.value * zoom;
     com.properties.x.value = Math.round((e.clientX - rectInfo.x - w / 2) / zoom);
@@ -45,6 +44,7 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
   const onMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log('LayerContainter');
+    sepPointPos({ e, layer });
     setCurLayer(layer);
     updateVisible(false);
     // 触发拖拽
