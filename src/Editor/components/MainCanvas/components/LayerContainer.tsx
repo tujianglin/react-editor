@@ -48,15 +48,17 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
     e.stopPropagation();
     console.log('LayerContainter');
     const targets = [];
-    selectedTargets.map((i) => {
-      if (i?.classList?.contains(layer.pid)) {
-        targets.push(i);
+    if (layer.pid) {
+      selectedTargets.map((i) => {
+        if (i?.classList?.contains(layer.pid)) {
+          targets.push(i);
+        }
+      });
+      if (!targets.length && (e.currentTarget as HTMLElement).dataset.lock === 'false') {
+        setSelectedTargets([$(`#${layer.id}`)]);
+      } else {
+        setSelectedTargets(targets);
       }
-    });
-    if (!targets.length && (e.currentTarget as HTMLElement).dataset.lock === 'false') {
-      setSelectedTargets([$(`#${layer.id}`)]);
-    } else {
-      setSelectedTargets(targets);
     }
     sepPointPos({ e, layer });
     setCurLayer(layer);
