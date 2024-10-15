@@ -10,9 +10,10 @@ interface LayerContainterProps {
   children: React.ReactNode;
   style: React.CSSProperties;
   layer?: LayerItem;
+  containerType?: 'flow' | 'absolute';
 }
 
-const LayerContainter = observer(({ children, style, layer }: LayerContainterProps) => {
+const LayerContainter = observer(({ children, style, layer, containerType }: LayerContainterProps) => {
   const { setCurLayer, addLayer, curLayer } = editorStore;
   const { moveableRef } = eventStore;
   const { updateVisible } = contextmenuStore;
@@ -31,6 +32,12 @@ const LayerContainter = observer(({ children, style, layer }: LayerContainterPro
     com.properties.y.value = Math.round((e.clientY - rectInfo.y - h / 2) / zoom);
     if (layer) {
       com.pid = layer.id;
+      if (containerType === 'flow') {
+        // 容器如果是流式布局，则锁定，且设置拖拽方向
+        com.lock = true;
+        com.edge = ['n', 'nw', 'ne', 's', 'se', 'sw', 'e', 'w'];
+        com.directions = ['n', 'nw', 'ne', 's', 'se', 'sw', 'e', 'w'];
+      }
     }
     addLayer(com);
   };
@@ -53,6 +60,12 @@ const LayerContainter = observer(({ children, style, layer }: LayerContainterPro
       style={style}
       onDrop={onDrop}
       onMouseDown={onMouseDown}
+      onPointerUp={() => {
+        // 鼠标抬起,停止拖动事件
+        setTimeout(() => {
+          moveableRef.stopDrag();
+        }, 100);
+      }}
     >
       {children}
     </div>

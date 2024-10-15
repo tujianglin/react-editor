@@ -1,14 +1,13 @@
 import editorStore from '@/Editor/store/editorStore';
 import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
 import { LayerItem } from '@/packages/types/component';
-import { $ } from '@/utils';
 import { treeForEach } from '@/utils/tree';
 import { Divider, Flex, Form, Select, Switch } from 'antd';
 import { observer } from 'mobx-react';
 import { IHorizontalLayout } from './default';
 
 const HorizontalLayoutConfig = observer(({ properties, id }: LayerItem<IHorizontalLayout>) => {
-  const { updateCurLayer, layerList, updateLayer } = editorStore!;
+  const { updateCurLayer, layerList } = editorStore!;
   const list = [];
   treeForEach(layerList, (i) => {
     if (i.pid === id) {
@@ -53,18 +52,7 @@ const HorizontalLayoutConfig = observer(({ properties, id }: LayerItem<IHorizont
       <Form.Item label={'填充元素'}>
         <Flex align="center">
           <GlobalTreeSelect field="fillItem" />
-          <Select
-            value={properties.fillItem.value}
-            allowClear
-            options={list}
-            onSelect={(e, option) => {
-              const dom = $(`#${option.id}`);
-              dom.style.width = '100%';
-              dom.style.height = '100%';
-              updateCurLayer({ id, properties: { fillItem: { value: e } } });
-              updateLayer([{ id: option.id, properties: { width: { value: dom.offsetWidth }, height: { value: dom.offsetHeight } } }]);
-            }}
-          />
+          <Select value={properties.fillItem.value} allowClear options={list} onSelect={(e) => updateCurLayer({ id, properties: { fillItem: { value: e } } })} />
         </Flex>
       </Form.Item>
       <Divider>事件</Divider>
