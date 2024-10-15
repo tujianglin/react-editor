@@ -6,9 +6,10 @@ import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 interface ShapeProps {
   children: React.ReactNode;
+  style: React.CSSProperties;
   layer: LayerItem;
 }
-const Shape = observer(({ children, layer }: ShapeProps) => {
+const Shape = observer(({ children, style, layer }: ShapeProps) => {
   const { setCurLayer } = editorStore!;
   const { setSelectedTargets, selectedTargets } = eventStore!;
   const { updateVisible, setPosition, sepPointPos } = contextmenuStore;
@@ -32,17 +33,7 @@ const Shape = observer(({ children, layer }: ShapeProps) => {
     }
   }, [layer.lock]);
   return (
-    <div
-      className={!layer.lock ?  'layer-item' : ''}
-      style={{
-        width: `${layer.properties.width.value}px`,
-        height: `${layer.properties.height.value}px`,
-        transform: `translate(${layer.properties.x.value}px, ${layer.properties.y.value}px)`,
-        position: 'absolute',
-      }}
-      onMouseDown={onMouseDown}
-      onContextMenu={onContextMenu}
-    >
+    <div className={!layer.lock ? 'layer-item' : ''} style={style} onMouseDown={onMouseDown} onContextMenu={onContextMenu}>
       {children}
     </div>
   );

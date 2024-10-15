@@ -26,6 +26,16 @@ function commonStyle(props: Partial<IProperties>) {
   } as CSSProperties;
 }
 
+export const getBaseShapeStyle = (layer: LayerItem) => {
+  const { properties } = layer;
+  return {
+    width: `${properties.width.value}px`,
+    height: `${properties.height.value}px`,
+    transform: `translate(${properties.x.value}px, ${properties.y.value}px)`,
+    position: 'absolute',
+  } as CSSProperties;
+};
+
 export const getWindowStyle = (props: Partial<IProperties>) => {
   return {
     position: 'relative',

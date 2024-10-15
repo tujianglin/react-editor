@@ -1,4 +1,5 @@
 import { DynamicComponent } from '@/packages/helper/DynamicComponent';
+import { getBaseShapeStyle } from '@/packages/utils/style';
 import { observer } from 'mobx-react';
 import { Fragment, lazy, memo } from 'react';
 import editorStore from '../../store/editorStore';
@@ -22,7 +23,7 @@ const MainCanvas = memo(
             <MoveBox />
             {layerList.map((i) => (
               <Fragment key={i.id}>
-                <Shape layer={i}>
+                <Shape style={getBaseShapeStyle(i)} layer={i}>
                   <DynamicComponent is={i.type} {...i} />
                 </Shape>
               </Fragment>
