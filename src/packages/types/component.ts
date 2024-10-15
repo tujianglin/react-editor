@@ -72,7 +72,7 @@ export interface PropValue<T = string> {
 }
 export type IProperties<T = {}> = {
   /** 组件名称 */
-  name: PropValue<string>; // 组件的名称
+  name: PropValue; // 组件的名称
   /** 组件宽度 */
   width: PropValue<number>; // 组件的宽度
   /** 组件高度 */
@@ -88,7 +88,7 @@ export type IProperties<T = {}> = {
   /** 不透明度 */
   opacity: PropValue<any>; // 组件的不透明度（0-1之间）
   /** 背景图片路径 */
-  backgroundImageSrc: PropValue<string>; // 背景图片的路径
+  backgroundImageSrc: PropValue; // 背景图片的路径
   /** 背景图片索引 */
   backgroundImageIndex: PropValue<number>; // 背景图片的索引
   /** 背景图片布局 */
@@ -98,7 +98,7 @@ export type IProperties<T = {}> = {
   /** 字体大小 */
   fontSize: PropValue<number>; // 字体大小（单位：像素）
   /** 字体家族 */
-  fontFamily: PropValue<string>; // 字体家族（CSS 字体家族字符串）
+  fontFamily: PropValue; // 字体家族（CSS 字体家族字符串）
   /** 文本颜色 */
   textColor: PropValue<any>; // 文本颜色（CSS 颜色字符串）
   /** 文本加粗 */
@@ -129,6 +129,30 @@ export type IProperties<T = {}> = {
   dock: PropValue<0 | 1 | 2 | 3 | 4 | 5>; // 对齐方式（0: 未知，1: 左对齐，2: 右对齐，3: 顶对齐，4: 底对齐，5: 中间对齐）
   /** 是否启用 */
   enable: PropValue<boolean>;
+  /** 点击事件 */
+  click: PropValue;
+  /** 右键菜单事件 */
+  contextmenu: PropValue;
+  /** 双击事件 */
+  dblclick: PropValue;
+  /** 键盘按下事件 */
+  keydown: PropValue;
+  /** 键盘抬起事件 */
+  keyup: PropValue;
+  /** 鼠标按下事件 */
+  'pointer.down': PropValue;
+  /** 鼠标抬起事件 */
+  'pointer.up': PropValue;
+  /** 鼠标移动事件 */
+  'pointer.move': PropValue;
+  /** 鼠标进入事件 */
+  'pointer.enter': PropValue;
+  /** 鼠标离开事件 */
+  'pointer.leave': PropValue;
+  /** 鼠标悬停事件 */
+  'pointer.hover': PropValue;
+  /** 滚动事件 */
+  wheel: PropValue;
 } & T;
 
 export type LayerItem<T = {}> = {

@@ -8,8 +8,8 @@ import AbsoluteLayout from './index';
 
 /* 私有属性 */
 export interface IAbsoluteLayout {
-  hScroll: PropValue;
-  vScroll: PropValue;
+  hScroll: PropValue<boolean>;
+  vScroll: PropValue<boolean>;
   layoutAlignment: PropValue<number>;
 }
 
@@ -22,14 +22,14 @@ enum AbsoluteLayoutPropEnum {
 class Properties implements IAbsoluteLayout {
   hScroll = {
     index: AbsoluteLayoutPropEnum.hScroll,
-    type: Type.Event,
-    value: '',
+    type: Type.Bool,
+    value: false,
     metaData: '',
   };
   vScroll = {
     index: AbsoluteLayoutPropEnum.vScroll,
-    type: Type.Event,
-    value: '',
+    type: Type.Bool,
+    value: false,
     metaData: '',
   };
   layoutAlignment = {

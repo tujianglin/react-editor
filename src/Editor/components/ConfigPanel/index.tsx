@@ -4,9 +4,9 @@ import { DynamicComponent } from '@/packages/helper/DynamicComponent';
 import { Tabs } from 'antd';
 import { observer } from 'mobx-react';
 import Common from './components/Common';
+import CommonEvent from './components/CommonEvent';
 import Group from './components/Group';
 import System from './components/System';
-
 const ConfigPanel = observer(() => {
   const { curLayer } = editorStore!;
   const { selectedTargets } = eventStore!;
@@ -24,6 +24,7 @@ const ConfigPanel = observer(() => {
               children: <>{curLayer ? <DynamicComponent is={`${curLayer.type}Config`} {...curLayer} /> : <div>22</div>}</>,
             },
             { label: '公共属性', key: 'common', children: <Common {...curLayer} /> },
+            { label: '公共事件', key: 'event', children: <CommonEvent {...curLayer} /> },
           ]}
         />
       ) : (
