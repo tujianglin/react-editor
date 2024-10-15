@@ -1,22 +1,13 @@
 import editorStore from '@/Editor/store/editorStore';
-import eventStore from '@/Editor/store/eventStore';
 import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
 import { LayerItem } from '@/packages/types/component';
 import { Divider, Flex, Form, Switch } from 'antd';
 import { observer } from 'mobx-react';
-import { useEffect } from 'react';
 import { IAbsoluteLayout } from './default';
 
-const AbsoluteLayoutConfig = observer(({ id, properties, lock }: LayerItem<IAbsoluteLayout>) => {
+const AbsoluteLayoutConfig = observer(({ id, properties }: LayerItem<IAbsoluteLayout>) => {
   const { updateCurLayer } = editorStore!;
-  const { setSelectedTargets } = eventStore!;
 
-  useEffect(() => {
-    // 如果是流式布局,就取消 moveable 的选中状态
-    if (lock) {
-      setSelectedTargets([]);
-    }
-  }, [lock]);
   return (
     <Form labelAlign="left" colon={false} labelCol={{ span: 6 }}>
       <Divider className="!mt-0">属性</Divider>
