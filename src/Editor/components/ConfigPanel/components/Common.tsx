@@ -2,7 +2,6 @@ import editorStore from '@/Editor/store/editorStore';
 import eventStore from '@/Editor/store/eventStore';
 import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
 import { LayerItem } from '@/packages/types/component';
-import { parseColor, toCSSColorString } from '@/packages/utils';
 import { $ } from '@/utils';
 import { ColorPicker, Flex, Form, Input, InputNumber, Select, Slider, Switch } from 'antd';
 import { observer } from 'mobx-react';
@@ -147,8 +146,8 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
           <ColorPicker
             showText
             allowClear
-            value={toCSSColorString(properties.backgroundColor.value)}
-            onChange={(e) => updateCurLayer({ id, properties: { backgroundColor: { value: parseColor(`#${e.toHex()}`) } } })}
+            value={properties.backgroundColor?.value}
+            onChange={(e) => updateCurLayer({ id, properties: { backgroundColor: { value: e.toHex() } } })}
           />
         </Flex>
       </Form.Item>
@@ -170,8 +169,10 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
           <ColorPicker
             showText
             allowClear
-            value={toCSSColorString(properties.textColor.value)}
-            onChange={(e) => updateCurLayer({ id, properties: { textColor: { value: parseColor(`#${e.toHex()}`) } } })}
+            value={properties.textColor?.value}
+            onChange={(e) => {
+              updateCurLayer({ id, properties: { textColor: { value: e.toHex() } } });
+            }}
           />
         </Flex>
       </Form.Item>

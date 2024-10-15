@@ -1,4 +1,5 @@
-import { exportToIo } from '@/utils/export';
+import { parseColor } from '@/packages/utils';
+import { treeForEach } from '@/utils/tree';
 import { DownloadOutlined, SaveOutlined } from '@ant-design/icons';
 import { FloatButton, Layout } from 'antd';
 import { cloneDeep } from 'lodash-es';
@@ -16,7 +17,7 @@ const Editor = observer(() => {
     EditorLoader.load();
     editorStore.setComponentList();
     EditorLoader.getLocalStorage();
-    editorStore.getGlobalData();
+    // editorStore.getGlobalData();
   }, []);
 
   return (
@@ -44,7 +45,12 @@ const Editor = observer(() => {
         <FloatButton
           icon={<DownloadOutlined />}
           onClick={() => {
-            exportToIo(cloneDeep(editorStore.layerList));
+            const tree = cloneDeep(editorStore.layerList);
+            treeForEach(tree, (e) => {
+              e.properties.backgroundColor.value = parseColor(`#${e.properties.backgroundColor.value}`);
+              e.properties.textColor.value = parseColor(`#${e.properties.textColor.value}`);
+            });
+            console.log(tree);
           }}
         />
       </FloatButton.Group>

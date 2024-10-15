@@ -1,7 +1,6 @@
 import editorStore from '@/Editor/store/editorStore';
 import { treeForEach } from '@/utils/tree';
 import { CSSProperties } from 'react';
-import { toCSSColorString } from '.';
 import { IProperties, LayerItem } from '../types/component';
 
 function commonStyle(props: Partial<IProperties>) {
@@ -11,8 +10,8 @@ function commonStyle(props: Partial<IProperties>) {
     fontSize: `${props.fontSize.value}px`,
     fontWeight: props.textBold.value ? 'bold' : 'normal',
     textDecoration: props.textLineStyle.value === 1 ? 'underline' : props.textLineStyle.value === 2 ? 'line-through' : props.textLineStyle.value === 3 ? 'overline' : 'none',
-    color: `${toCSSColorString(props.textColor.value)}`,
-    backgroundColor: `${props.backgroundColor?.value ? toCSSColorString(props.backgroundColor.value) : ''}`,
+    color: `#${props.textColor.value}`,
+    backgroundColor: `${props.backgroundColor?.value ? '#' + props.backgroundColor.value : ''}`,
     backgroundImage: props.backgroundImageSrc.value ? `url(${props.backgroundImageSrc.value})` : '',
     backgroundSize: props.backgroundImageLayout.value === 1 ? 'cover' : '',
     backgroundRepeat: props.backgroundImageLayout.value === 2 ? 'no-repeat' : '',

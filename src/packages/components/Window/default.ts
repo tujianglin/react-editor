@@ -95,7 +95,7 @@ export class WindowLayer extends BascLayerItem {
     this.properties.name.value = generateID();
     this.properties.width.value = 800;
     this.properties.height.value = 600;
-    this.properties.backgroundColor.value = 4294967295;
+    this.properties.backgroundColor.value = 'ffffff';
     this.properties = assign(this.properties, new Properties());
   }
 }

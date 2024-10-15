@@ -99,7 +99,7 @@ export class BascLayerItem implements LayerItem {
     textColor: {
       index: PropEnum.textColor,
       type: Type.Int32,
-      value: 255,
+      value: '000000',
       metaData: '',
     },
     textBold: {

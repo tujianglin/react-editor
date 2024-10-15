@@ -1,4 +1,4 @@
-export function parseColor(cssColorString: string) {
+export function parseColor(cssColorString: string): number {
   if (cssColorString.startsWith('#')) {
     let r = 0;
     let g = 0;
