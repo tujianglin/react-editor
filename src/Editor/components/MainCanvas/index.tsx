@@ -4,6 +4,7 @@ import { observer } from 'mobx-react';
 import { Fragment, lazy, memo } from 'react';
 import editorStore from '../../store/editorStore';
 import ContextMenu from './components/ContextMenu';
+import HotKeyPress from './components/HotKeyPress';
 import Ruler from './components/Ruler';
 import SelectArea from './components/SelectArea';
 import Shape from './components/Shape';
@@ -31,6 +32,7 @@ const MainCanvas = memo(
           </Viewport>
         </Ruler>
         <ContextMenu />
+        <HotKeyPress />
       </div>
     );
   }),

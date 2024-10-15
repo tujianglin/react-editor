@@ -15,7 +15,7 @@ interface LayerContainterProps {
 
 const LayerContainter = observer(({ children, style, layer, containerType }: LayerContainterProps) => {
   const { setCurLayer, addLayer, curLayer } = editorStore;
-  const { moveableRef, zoom } = eventStore;
+  const { moveableRef, zoom, selectedTargets, setSelectedTargets } = eventStore;
   const { updateVisible, sepPointPos } = contextmenuStore;
   const onDrop = (event: React.DragEvent) => {
     const e = event.nativeEvent;
@@ -37,6 +37,9 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
         com.edge = ['n', 'nw', 'ne', 's', 'se', 'sw', 'e', 'w'];
         com.directions = ['n', 'nw', 'ne', 's', 'se', 'sw', 'e', 'w'];
       }
+      if (layer.type === 'AbsoluteLayout') {
+        com.properties.z.value = 20;
+      }
     }
     addLayer(com);
   };
@@ -44,6 +47,17 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
   const onMouseDown = (e: React.MouseEvent) => {
     e.stopPropagation();
     console.log('LayerContainter');
+    const targets = [];
+    selectedTargets.map((i) => {
+      if (i?.classList?.contains(layer.pid)) {
+        targets.push(i);
+      }
+    });
+    if (!targets.length && (e.currentTarget as HTMLElement).dataset.lock === 'false') {
+      setSelectedTargets([$(`#${layer.id}`)]);
+    } else {
+      setSelectedTargets(targets);
+    }
     sepPointPos({ e, layer });
     setCurLayer(layer);
     updateVisible(false);
@@ -56,7 +70,7 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
   return (
     <div
       id={layer?.id ? 'viewport_' + layer.id : 'viewport'}
-      className={layer?.id === curLayer?.id && layer?.lock ? 'shadow-bd' : ''}
+      className={layer?.id === curLayer?.id ? 'shadow-bd' : ''}
       style={style}
       onDrop={onDrop}
       onMouseDown={onMouseDown}

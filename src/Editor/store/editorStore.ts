@@ -67,11 +67,11 @@ class EditorStore {
   };
   deleteLayer = () => {
     // 如果是window 组件并没有父级,说明在最上层直接filter 过滤
-    if (this.curLayer.type === 'Window' && !this.curLayer.pid) {
+    if (this.curLayer?.type === 'Window' && !this.curLayer?.pid) {
       this.layerList = this.layerList.filter((i) => i.id !== this.curLayer.id);
     } else {
       treeForEach(this.layerList, (i) => {
-        if (i.id === this.curLayer.pid) {
+        if (i.id === this.curLayer?.pid) {
           i.children = i.children.filter((ii) => ii.id !== this.curLayer.id);
         }
       });

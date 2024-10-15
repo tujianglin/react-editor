@@ -23,12 +23,10 @@ class ContextMenuStore {
   setPosition = (position: [number, number]) => (this.position = position);
 
   sepPointPos = ({ e, layer }: { e: React.MouseEvent; layer: LayerItem }) => {
-    console.log(cloneDeep(layer));
-    const rectInfo = $(`#${layer.id}`)?.getBoundingClientRect();
+    const rectInfo = $(`#${layer?.id}`)?.getBoundingClientRect();
     if (!rectInfo) return;
     const x = Math.round(e.clientX - rectInfo.x);
     const y = Math.round(e.clientY - rectInfo.y);
-    console.log([x, y]);
     this.pointPos = [x, y];
   };
 
@@ -45,7 +43,7 @@ class ContextMenuStore {
       this.visible = false;
       return;
     }
-    const { addLayer } = editorStore;
+    const { addLayer, curLayer } = editorStore;
     const { zoom } = eventStore!;
     const tree = [cloneDeep(this.copyData)];
     treeForEach(tree, (i) => {
@@ -57,6 +55,9 @@ class ContextMenuStore {
     const h = com.properties.height.value * zoom;
     com.properties.x.value = Math.round((this.pointPos[0] - w / 2) / zoom);
     com.properties.y.value = Math.round((this.pointPos[1] - h / 2) / zoom);
+    if (['AbsoluteLayout', 'HorizontalLayout', 'VerticalLayout'].includes(curLayer?.type)) {
+      com.pid = curLayer.id;
+    }
     addLayer(com);
     this.visible = false;
   };
@@ -77,6 +78,11 @@ class ContextMenuStore {
     const { updateCurLayer, curLayer } = editorStore;
     updateCurLayer({ id: curLayer.id, lock: false, directions: true, edge: true, properties: { dock: { value: 0 } } });
     this.visible = false;
+  };
+
+  /** 保存 */
+  onSave = () => {
+    localStorage.setItem('layerList', JSON.stringify(editorStore.layerList));
   };
 }
 

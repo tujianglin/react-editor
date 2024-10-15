@@ -10,6 +10,7 @@ import ConfigPanel from './components/ConfigPanel';
 import LeftPanel from './components/LeftPanel';
 import MainCanvas from './components/MainCanvas';
 import EditorLoader from './loader/EditorLoader';
+import contextmenuStore from './store/contextmenuStore';
 import editorStore from './store/editorStore';
 
 const Editor = observer(() => {
@@ -39,7 +40,7 @@ const Editor = observer(() => {
         <FloatButton
           icon={<SaveOutlined />}
           onClick={() => {
-            localStorage.setItem('layerList', JSON.stringify(editorStore.layerList));
+            contextmenuStore.onSave();
           }}
         />
         <FloatButton
