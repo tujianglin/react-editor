@@ -16,7 +16,7 @@ const Editor = observer(() => {
     EditorLoader.load();
     editorStore.setComponentList();
     EditorLoader.getLocalStorage();
-    // editorStore.getGlobalData();
+    editorStore.getGlobalData();
   }, []);
 
   return (

@@ -13,7 +13,7 @@ import { IMyWindow } from './default';
 
 const TextBox = observer(({ id, properties, children }: LayerItem<IMyWindow>) => {
   const { setCurLayer, addLayer } = editorStore;
-  const { zoom, setSelectedTargets, selectedTargets, moveableRef } = eventStore;
+  const { zoom, setSelectedTargets, selectedTargets } = eventStore;
   const { sepPointPos } = contextmenuStore;
 
   const onDrop = (event: React.DragEvent) => {
@@ -48,16 +48,16 @@ const TextBox = observer(({ id, properties, children }: LayerItem<IMyWindow>) =>
       setSelectedTargets(targets);
     }
     setCurLayer(layer);
-    setTimeout(() => {
-      moveableRef?.dragStart(e.nativeEvent); // 手动启动拖拽
-    }, 0);
+    // setTimeout(() => {
+    //   moveableRef?.dragStart(e.nativeEvent); // 手动启动拖拽
+    // }, 0);
   };
 
   return (
     <div id={`viewport-${id}`} style={getWindowStyle(properties)} onDrop={onDrop}>
       {children.map((i) => (
         <Fragment key={i.id}>
-          <div id={i.id} className={classNames('shadow-sm', i.pid, 'layer-item')} style={getLayerStyle(i)} onMouseDown={(e) => onMouseDown(e, i)}>
+          <div id={i.id} className={classNames('shadow-sm', i.pid, !i.lock ? 'layer-item' : '')} style={getLayerStyle(i)} onMouseDown={(e) => onMouseDown(e, i)}>
             <DynamicComponent is={i.type} {...i} />
           </div>
         </Fragment>

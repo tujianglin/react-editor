@@ -33,7 +33,7 @@ const Shape = observer(({ children, layer }: ShapeProps) => {
   }, [layer.lock]);
   return (
     <div
-      className={'layer-item'}
+      className={!layer.lock ?  'layer-item' : ''}
       style={{
         width: `${layer.properties.width.value}px`,
         height: `${layer.properties.height.value}px`,

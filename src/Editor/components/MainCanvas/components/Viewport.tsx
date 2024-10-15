@@ -38,14 +38,14 @@ const Viewport = observer(({ children }: ViewportProps) => {
     editorStore.addLayer(com);
   };
 
-  const { horizontalGuidesRef, verticalGuidesRef, setZoom, setSelectedTargets } = eventStore!;
+  const { horizontalGuidesRef, verticalGuidesRef, setZoom } = eventStore!;
   const { setCurLayer } = editorStore!;
 
   const onMouseDown = (e: React.MouseEvent) => {
+    console.log(e);
     e.stopPropagation();
     sepPointPos({ e, pid: 'viewport' });
     setCurLayer(null);
-    setSelectedTargets([]);
   };
   return (
     <InfiniteViewer

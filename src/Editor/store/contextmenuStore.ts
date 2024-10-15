@@ -23,7 +23,8 @@ class ContextMenuStore {
   setPosition = (position: [number, number]) => (this.position = position);
 
   sepPointPos = ({ e, pid }) => {
-    const rectInfo = $(`#${pid}`).getBoundingClientRect();
+    const rectInfo = $(`#${pid}`)?.getBoundingClientRect();
+    if (!rectInfo) return;
     const x = Math.round(e.clientX - rectInfo.x);
     const y = Math.round(e.clientY - rectInfo.y);
     this.pointPos = [x, y];
