@@ -1,4 +1,5 @@
 import { parseColor } from '@/packages/utils';
+import { exportToIo } from '@/utils/export';
 import { treeForEach } from '@/utils/tree';
 import { DownloadOutlined, SaveOutlined } from '@ant-design/icons';
 import { FloatButton, Layout } from 'antd';
@@ -18,7 +19,7 @@ const Editor = observer(() => {
     EditorLoader.load();
     editorStore.setComponentList();
     EditorLoader.getLocalStorage();
-    // editorStore.getGlobalData();
+    editorStore.getGlobalData();
   }, []);
 
   return (
@@ -51,7 +52,7 @@ const Editor = observer(() => {
               e.properties.backgroundColor.value = parseColor(`#${e.properties.backgroundColor.value}`);
               e.properties.textColor.value = parseColor(`#${e.properties.textColor.value}`);
             });
-            console.log(tree);
+            exportToIo(tree);
           }}
         />
       </FloatButton.Group>

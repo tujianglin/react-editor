@@ -48,7 +48,7 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
     e.stopPropagation();
     console.log('LayerContainter');
     const targets = [];
-    if (layer.pid) {
+    if (layer?.pid) {
       selectedTargets.map((i) => {
         if (i?.classList?.contains(layer.pid)) {
           targets.push(i);
@@ -72,7 +72,7 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
   return (
     <div
       id={layer?.id ? 'viewport_' + layer.id : 'viewport'}
-      className={layer?.id === curLayer?.id ? 'shadow-bd' : ''}
+      className={layer?.id === curLayer?.id && layer ? 'shadow-bd' : ''}
       style={style}
       onDrop={onDrop}
       onMouseDown={onMouseDown}
