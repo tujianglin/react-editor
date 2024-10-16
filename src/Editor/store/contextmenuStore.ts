@@ -33,8 +33,10 @@ class ContextMenuStore {
   /** 复制 */
   onCopy = () => {
     const { curLayer } = editorStore;
+    if (!curLayer) return;
     this.copyData = cloneDeep(curLayer);
     this.visible = false;
+    message.success('复制成功');
   };
   /** 粘贴 */
   onPaste = () => {
@@ -55,17 +57,20 @@ class ContextMenuStore {
     const h = com.properties.height.value * zoom;
     com.properties.x.value = Math.round((this.pointPos[0] - w / 2) / zoom);
     com.properties.y.value = Math.round((this.pointPos[1] - h / 2) / zoom);
-    if (['AbsoluteLayout', 'HorizontalLayout', 'VerticalLayout'].includes(curLayer?.type)) {
+    // 粘贴到容器组件特殊处理
+    if (['AbsoluteLayout', 'HorizontalLayout', 'VerticalLayout', 'Window'].includes(curLayer?.type)) {
       com.pid = curLayer.id;
     }
     addLayer(com);
     this.visible = false;
+    message.success('粘贴成功');
   };
   /** 删除 */
   onDelete = () => {
     const { deleteLayer } = editorStore;
     deleteLayer();
     this.visible = false;
+    message.success('删除成功');
   };
   /** 锁定 */
   onLock = () => {

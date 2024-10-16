@@ -1,6 +1,5 @@
 import contextmenuStore from '@/Editor/store/contextmenuStore';
-import { message } from 'antd';
-import key from 'keymaster';
+import { useKeyPress } from 'ahooks';
 import { observer } from 'mobx-react';
 import { useEffect } from 'react';
 
@@ -13,35 +12,31 @@ const HotKeyPress = observer(() => {
         e.preventDefault(); // 阻止默认行为
       }
     };
-    window.addEventListener('keydown', handleKeydown);
+    window.addEventListener('keydown', handleKeydown, { capture: true });
     return () => {
-      window.removeEventListener('keydown', handleKeydown);
+      window.removeEventListener('keydown', handleKeydown, { capture: true });
     };
   });
   const { onCopy, onPaste, onDelete, onSave } = contextmenuStore;
 
-  useEffect(() => {
-    // 保存
-    key('⌘+s, ctrl+s', () => {
-      onSave();
-      message.success('保存成功');
-    });
-    // 复制
-    key('⌘+c, ctrl+c', () => {
-      onCopy();
-      message.success('复制成功');
-    });
-    // 粘贴
-    key('⌘+v, ctrl+v', () => {
-      onPaste();
-      message.success('粘贴成功');
-    });
-    // 删除
-    key('delete, delete', () => {
-      onDelete();
-      message.success('删除成功');
-    });
-  }, []);
+  useKeyPress(['ctrl.c', 'ctrl.v', 'ctrl.s', 'delete'], (_, key) => {
+    switch (key) {
+      case 'ctrl.c':
+        onCopy();
+        break;
+      case 'ctrl.v':
+        onPaste();
+        break;
+      case 'ctrl.s':
+        onSave();
+        break;
+      case 'delete':
+        onDelete();
+        break;
+      default:
+        break;
+    }
+  });
   return <div />;
 });
 

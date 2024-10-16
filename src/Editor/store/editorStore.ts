@@ -15,6 +15,14 @@ class EditorStore {
   };
   /** 全局数据源 */
   globalData: any = [];
+  /** 资源数据区 */
+  resourceData = [
+    { type: 1, name: '图片', children: [] },
+    { type: 2, name: '音频', children: [] },
+    { type: 3, name: '视频', children: [] },
+    { type: 4, name: '文本', children: [] },
+    { type: 5, name: '二进制', children: [] },
+  ];
   constructor() {
     makeAutoObservable(this);
   }
