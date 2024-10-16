@@ -22,7 +22,6 @@ const SelectArea = observer(() => {
       toggleContinueSelect={['shift']}
       ratio={0}
       onDragStart={(e) => {
-        e.inputEvent.preventDefault(); // 阻止框选时 Meta 或 Ctrl 相关的默认行为
         const target = e.inputEvent.target;
         const flatted = selectedTargets.flat(3) as Array<HTMLElement | SVGElement>;
         if (moveableRef.isMoveableElement(target) || flatted.some((t) => t === target || t.contains(target))) {
@@ -31,8 +30,6 @@ const SelectArea = observer(() => {
         e.data.startTargets = selectedTargets;
       }}
       onSelectEnd={(e) => {
-        console.log(e)
-        e.inputEvent.preventDefault(); // 阻止框选时 Meta 或 Ctrl 相关的默认行为
         const { isDragStartEnd, inputEvent } = e;
         if (isDragStartEnd) {
           inputEvent.preventDefault();

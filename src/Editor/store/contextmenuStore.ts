@@ -88,6 +88,7 @@ class ContextMenuStore {
   /** 保存 */
   onSave = () => {
     localStorage.setItem('layerList', JSON.stringify(editorStore.layerList));
+    message.success('保存成功');
   };
 }
 

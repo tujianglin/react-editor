@@ -26,9 +26,6 @@ importers:
       dayjs:
         specifier: ^1.11.13
         version: 1.11.13
-      keymaster:
-        specifier: ^1.6.2
-        version: 1.6.2
       lodash-es:
         specifier: ^4.17.21
         version: 4.17.21
@@ -2456,9 +2453,6 @@ packages:
 
   keycon@1.4.0:
     resolution: {integrity: sha512-p1NAIxiRMH3jYfTeXRs2uWbVJ1WpEjpi8ktzUyBJsX7/wn2qu2VRXktneBLNtKNxJmlUYxRi9gOJt1DuthXR7A==}
-
-  keymaster@1.6.2:
-    resolution: {integrity: sha512-OvA/AALN8IDKKkTk2Z+bDrzs/SQao4lo/QPbwSdDvm+frxfiYiYCSn1aHFUypJY3SruAO1y/c771agBmTXqUtg==}
 
   keyv@4.5.4:
     resolution: {integrity: sha512-oxVHkHR/EJf2CNXnWxRLW6mg7JyCCUcG0DtEGmL2ctUo1PNTin1PUil+r/+4r5MpVgC/fn1kjsx7mjSujKqIpw==}
@@ -6711,8 +6705,6 @@ snapshots:
       '@daybrush/utils': 1.13.0
       '@scena/event-emitter': 1.0.5
       keycode: 2.2.1
-
-  keymaster@1.6.2: {}
 
   keyv@4.5.4:
     dependencies:

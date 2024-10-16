@@ -19,15 +19,19 @@ const HotKeyPress = observer(() => {
   });
   const { onCopy, onPaste, onDelete, onSave } = contextmenuStore;
 
-  useKeyPress(['ctrl.c', 'ctrl.v', 'ctrl.s', 'delete'], (_, key) => {
+  useKeyPress(['ctrl.c', 'ctrl.v', 'ctrl.s', 'meta.c', 'meta.v', 'meta.s', 'delete'], (_, key) => {
     switch (key) {
       case 'ctrl.c':
+      case 'meta.c':
         onCopy();
         break;
       case 'ctrl.v':
+      case 'meta.v':
         onPaste();
         break;
       case 'ctrl.s':
+      case 'meta.s':
+        console.log(11);
         onSave();
         break;
       case 'delete':
