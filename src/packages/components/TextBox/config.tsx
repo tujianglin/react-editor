@@ -26,10 +26,9 @@ const TextBoxConfig = observer(({ properties, id }: LayerItem<ITextBox>) => {
             <Select
               value={properties.type.value}
               options={[
-                { label: '数字输入', value: 1 },
-                { label: '数字、点（.)、正负输入', value: 2 },
-                { label: '任意字符输入', value: 3 },
-                { label: '密码输入', value: 4 },
+                { label: '数字、点（.)、正负输入', value: 0 },
+                { label: '任意字符输入', value: 1 },
+                { label: '密码输入', value: 2 },
               ]}
               onChange={(e) => updateCurLayer<ITextBox>({ id, properties: { type: { value: e } } })}
             />

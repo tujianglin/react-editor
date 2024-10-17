@@ -3,69 +3,58 @@ import { PropValue, Type } from '@/packages/types/component';
 import { BascLayerItem } from '@/packages/utils/config';
 import { generateID } from '@/utils';
 import { assign } from 'lodash-es';
-import TextBoxConfig from './config';
-import TextBox from './index';
+import MultilineTextBoxConfig from './config';
+import MultilineTextBox from './index';
 
 /* 私有属性 */
-export interface ITextBox {
-  /** 文本内容 */
+export interface IMultilineTextBox {
   value: PropValue;
-  /** 占位符文本 */
   placeholderText: PropValue;
-  /** 输入框类型  0.数字 1.任意字符输入 2.密码输入 */
-  type: PropValue<0 | 1 | 2>;
-  /** 是否只读 */
   readOnly: PropValue<boolean>;
   changed: PropValue;
 }
 
 /* 私有属性枚举 */
-enum TextBoxPropEnum {
+enum MultilineTextBoxPropEnum {
   value = 42,
   placeholderText,
-  type,
   readOnly,
   changed,
 }
-class Properties implements ITextBox {
+
+class Properties implements IMultilineTextBox {
   value = {
-    index: TextBoxPropEnum.value,
+    index: MultilineTextBoxPropEnum.value,
     type: Type.String,
     value: '',
     metaData: '',
   };
   placeholderText = {
-    index: TextBoxPropEnum.placeholderText,
+    index: MultilineTextBoxPropEnum.placeholderText,
     type: Type.String,
     value: '',
     metaData: '',
   };
-  type = {
-    index: TextBoxPropEnum.type,
-    type: Type.Int8,
-    value: 1 as const,
-    metaData: '',
-  };
   readOnly = {
-    index: TextBoxPropEnum.readOnly,
+    index: MultilineTextBoxPropEnum.readOnly,
     type: Type.Bool,
     value: false,
     metaData: '',
   };
   changed = {
-    index: TextBoxPropEnum.changed,
+    index: MultilineTextBoxPropEnum.changed,
     type: Type.Event,
     value: '',
     metaData: '',
   };
 }
 
-class TextBoxLayer extends BascLayerItem {
+class MultilineTextBoxLayer extends BascLayerItem {
   constructor() {
     super();
-    this.classType = 7;
-    this.type = 'TextBox';
-    this.name = '输入框';
+    this.classType = 8; // 需修改
+    this.type = 'MultilineTextBox';
+    this.name = '多行文本';
     this.properties.name.value = generateID();
     this.properties.width.value = 100;
     this.properties.height.value = 32;
@@ -73,27 +62,27 @@ class TextBoxLayer extends BascLayerItem {
   }
 }
 
-export default class TextBoxDefault extends AbstractDefinition<any, TextBoxLayer> {
+export default class MultilineTextBoxDefault extends AbstractDefinition<any, MultilineTextBoxLayer> {
   getBaseInfo() {
     return {
-      order: 7,
-      name: '输入框',
-      type: 'TextBox',
+      order: 8,
+      name: '多行文本',
+      type: 'MultilineTextBox',
     };
   }
-  getInitConfig(): TextBoxLayer {
-    return { ...new TextBoxLayer() };
+  getInitConfig(): MultilineTextBoxLayer {
+    return { ...new MultilineTextBoxLayer() };
   }
   getComponent() {
     return {
-      type: 'TextBox',
-      comp: TextBox,
+      type: 'MultilineTextBox',
+      comp: MultilineTextBox,
     };
   }
   getComponentConfig() {
     return {
-      type: 'TextBoxConfig',
-      comp: TextBoxConfig,
+      type: 'MultilineTextBoxConfig',
+      comp: MultilineTextBoxConfig,
     };
   }
 }
