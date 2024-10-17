@@ -107,22 +107,26 @@ const fileWrite = (writer: BinaryWriter) => {
 
 /* 资源区域写入 */
 const resourceWrite = (writer: BinaryWriter) => {
-  writer.Write7BitEncodedInt(0); // 资源数据区 数组长度
-  // writer.WriteInt8(0); // 图片
-  // writer.WriteString('demo-resource'); // 资源名称
-
-  // const curPosition = writer.Position;
-  // writer.WriteInt32(0); // 资源内容数据长度
-
-  // writer.Write7BitEncodedInt(0); // 图片个数
-  // writer.WriteString('image/png');
-  // writer.Write7BitEncodedInt(0); // 内容长度
-
-  // const end = writer.Position;
-  // const len = end - curPosition;
-  // writer.Position = curPosition;
-  // writer.WriteInt32(len);
-  // writer.Position = end;
+  const resources = cloneDeep(editorStore.resourceData);
+  console.log('资源区域长度', resources.length);
+  writer.Write7BitEncodedInt(resources.length); // 资源数据区 数组长度
+  resources.forEach((item) => {
+    writer.WriteInt8(item.type); // 图片
+    writer.WriteString(item.name); // 资源名称
+    const curPosition = writer.Position;
+    writer.WriteInt32(0); // 资源内容数据长度
+    console.log(`${item.name}个数`, item.children.length);
+    writer.Write7BitEncodedInt(item.children.length); // 图片个数
+    item.children.forEach((child) => {
+      writer.WriteString(child);
+    });
+    const end = writer.Position;
+    const len = end - curPosition;
+    writer.Position = curPosition;
+    console.log(`${item.name}资源长度`, len);
+    writer.WriteInt32(len);
+    writer.Position = end;
+  });
 };
 
 /* 窗口写入 */

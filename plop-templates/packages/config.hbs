@@ -9,11 +9,6 @@ const {{name}}Config = observer(({ properties, id, name }: LayerItem<I{{name}}>)
   const { updateCurLayer } = editorStore!;
   return (
     <Form labelAlign="left" colon={false} labelCol=\{{ span: 6 }}>
-      <Form.Item label={'名称'}>
-        <Flex align="center">
-          <Input value={name} onChange={(e) => updateCurLayer({ id, name: e.target.value })} />
-        </Flex>
-      </Form.Item>
       <Divider className="!mt-0">属性</Divider>
       <Form.Item label={'文本内容'}>
         <Flex align="center">

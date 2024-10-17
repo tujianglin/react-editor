@@ -1,7 +1,6 @@
 import editorStore from '@/Editor/store/editorStore';
 import { Button, Divider, Upload, UploadProps } from 'antd';
 import { observer } from 'mobx-react';
-import { images } from './a';
 
 const Resource = observer(() => {
   const { resourceData } = editorStore;
@@ -26,9 +25,13 @@ const Resource = observer(() => {
         </Button>
       </Upload>
       {resourceData.map((i) => (
-        <Divider key={i.type}>{i.name}</Divider>
+        <div key={i.type}>
+          <Divider>{i.name}</Divider>
+          {i.children.map((ii, index) => (
+            <img key={index} className="w-50px h-50px" src={ii} alt="" />
+          ))}
+        </div>
       ))}
-      <img src={images[0]} alt="" />
     </div>
   );
 });

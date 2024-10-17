@@ -31,7 +31,6 @@ const HotKeyPress = observer(() => {
         break;
       case 'ctrl.s':
       case 'meta.s':
-        console.log(11);
         onSave();
         break;
       case 'delete':

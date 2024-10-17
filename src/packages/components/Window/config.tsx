@@ -1,11 +1,19 @@
 import editorStore from '@/Editor/store/editorStore';
 import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
 import { LayerItem } from '@/packages/types/component';
-import { Divider, Flex, Form, Input, InputNumber, Switch } from 'antd';
+import { Divider, Flex, Form, Input, Select, Switch } from 'antd';
 import { observer } from 'mobx-react';
+import { useEffect, useState } from 'react';
 import { IMyWindow } from './default';
 
 const WindowConfig = observer(({ id, properties }: LayerItem<IMyWindow>) => {
+  const [srcList, setSrcList] = useState([]);
+
+  useEffect(() => {
+    const child = editorStore.resourceData.find((i) => i.name === properties.IconSrcGroup.value)?.children;
+    const list = child?.map((i, index) => ({ label: i, value: index }));
+    setSrcList(list || []);
+  }, [properties.IconSrcGroup.value]);
   const { updateCurLayer } = editorStore!;
   return (
     <Form labelAlign="left" colon={false} labelCol={{ span: 6 }}>
@@ -36,13 +44,20 @@ const WindowConfig = observer(({ id, properties }: LayerItem<IMyWindow>) => {
       <Form.Item label={'图标所属组'}>
         <Flex align="center">
           <GlobalTreeSelect field="IconSrcGroup" />
-          <Input value={properties.IconSrcGroup.value} onChange={(e) => updateCurLayer<IMyWindow>({ id, properties: { IconSrcGroup: { value: e.target.value } } })} />
+          <Select
+            value={properties.IconSrcGroup.value}
+            options={editorStore.resourceData}
+            fieldNames={{ label: 'name', value: 'name' }}
+            onChange={(e) => {
+              updateCurLayer<IMyWindow>({ id, properties: { IconSrcGroup: { value: e } } });
+            }}
+          />
         </Flex>
       </Form.Item>
       <Form.Item label={'图标索引'}>
         <Flex align="center">
           <GlobalTreeSelect field="IconScrIndex" />
-          <InputNumber className="w-full" value={properties.IconScrIndex.value} onChange={(e) => updateCurLayer<IMyWindow>({ id, properties: { IconScrIndex: { value: e } } })} />
+          <Select value={properties.IconScrIndex.value} options={srcList} onChange={(e) => updateCurLayer<IMyWindow>({ id, properties: { IconScrIndex: { value: e } } })} />
         </Flex>
       </Form.Item>
       <Divider>事件</Divider>

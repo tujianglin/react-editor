@@ -5,9 +5,16 @@ import { LayerItem } from '@/packages/types/component';
 import { $ } from '@/utils';
 import { ColorPicker, Flex, Form, Input, InputNumber, Select, Slider, Switch } from 'antd';
 import { observer } from 'mobx-react';
+import { useEffect, useState } from 'react';
 import { DraggableRequestParam } from 'react-moveable';
 
 const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) => {
+  const [srcList, setSrcList] = useState([]);
+  useEffect(() => {
+    const child = editorStore.resourceData.find((i) => i.name === properties.backgroundImageSrc.value)?.children;
+    const list = child?.map((i, index) => ({ label: i, value: index }));
+    setSrcList(list || []);
+  }, [properties.backgroundImageSrc.value]);
   const { moveableRef } = eventStore!;
   const { updateCurLayer } = editorStore!;
   return (
@@ -112,17 +119,18 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
       <Form.Item label={'背景图'}>
         <Flex align="center">
           <GlobalTreeSelect field="backgroundImageSrc" />
-          <Input value={properties.backgroundImageSrc.value} onChange={(e) => updateCurLayer({ id, properties: { backgroundImageSrc: { value: e.target.value } } })} />
+          <Select
+            value={properties.backgroundImageSrc.value}
+            options={editorStore.resourceData}
+            fieldNames={{ label: 'name', value: 'name' }}
+            onChange={(e) => updateCurLayer({ id, properties: { backgroundImageSrc: { value: e } } })}
+          />
         </Flex>
       </Form.Item>
       <Form.Item label={'背景图索引'}>
         <Flex align="center">
           <GlobalTreeSelect field="backgroundImageIndex" />
-          <InputNumber
-            className="w-full"
-            value={properties.backgroundImageIndex.value}
-            onChange={(e) => updateCurLayer({ id, properties: { backgroundImageIndex: { value: e } } })}
-          />
+          <Select value={properties.backgroundImageIndex.value} options={srcList} onChange={(e) => updateCurLayer({ id, properties: { backgroundImageIndex: { value: e } } })} />
         </Flex>
       </Form.Item>
       <Form.Item label={'背景图样式'}>

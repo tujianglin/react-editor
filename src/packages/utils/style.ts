@@ -4,6 +4,8 @@ import { CSSProperties } from 'react';
 import { IProperties, LayerItem } from '../types/component';
 
 function commonStyle(props: Partial<IProperties>) {
+  const child = editorStore.resourceData.find((i) => i.name === props.backgroundImageSrc.value)?.children;
+  const bgSrc = child?.find((_, index) => index === props.backgroundImageIndex.value);
   return {
     width: `${props.width.value}px`,
     height: `${props.height.value}px`,
@@ -12,7 +14,7 @@ function commonStyle(props: Partial<IProperties>) {
     textDecoration: props.textLineStyle.value === 1 ? 'underline' : props.textLineStyle.value === 2 ? 'line-through' : props.textLineStyle.value === 3 ? 'overline' : 'none',
     color: `#${props.textColor.value}`,
     backgroundColor: `${props.backgroundColor?.value ? '#' + props.backgroundColor.value : ''}`,
-    backgroundImage: props.backgroundImageSrc.value ? `url(${props.backgroundImageSrc.value})` : '',
+    backgroundImage: bgSrc ? `url(${bgSrc})` : '',
     backgroundSize: props.backgroundImageLayout.value === 1 ? 'cover' : '',
     backgroundRepeat: props.backgroundImageLayout.value === 2 ? 'no-repeat' : '',
     backgroundPosition: props.backgroundImageLayout.value === 3 ? 'center' : '',

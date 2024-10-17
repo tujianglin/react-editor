@@ -2,6 +2,7 @@ import { BaseInfo, ISystem, LayerItem } from '@/packages/types/component';
 import { treeForEach } from '@/utils/tree';
 import { isEqual, merge } from 'lodash-es';
 import { makeAutoObservable } from 'mobx';
+import { images } from '../components/LeftPanel/components/a';
 import EditorLoader from '../loader/EditorLoader';
 import eventStore from './eventStore';
 class EditorStore {
@@ -17,7 +18,7 @@ class EditorStore {
   globalData: any = [];
   /** 资源数据区 */
   resourceData = [
-    { type: 1, name: '图片', children: [] },
+    { type: 1, name: '图片', children: images },
     { type: 2, name: '音频', children: [] },
     { type: 3, name: '视频', children: [] },
     { type: 4, name: '文本', children: [] },
