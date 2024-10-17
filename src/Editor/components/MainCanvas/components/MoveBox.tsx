@@ -28,6 +28,7 @@ const MoveBox = observer(() => {
   const { selectedTargets, selectoRef } = eventStore!;
   const { updateCurLayer, updateLayer } = editorStore;
   const list = treeToList(cloneDeep(editorStore.layerList));
+
   return (
     <Moveable
       ref={moveableRef}

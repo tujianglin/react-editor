@@ -1,3 +1,4 @@
+import editorStore from '@/Editor/store/editorStore';
 import eventStore from '@/Editor/store/eventStore';
 import { observer } from 'mobx-react';
 import { useEffect, useRef } from 'react';
@@ -9,7 +10,7 @@ const SelectArea = observer(() => {
   useEffect(() => {
     eventStore.setSelectoRef(selectoRef.current);
   }, []);
-
+  const { setCurLayer } = editorStore;
   const { moveableRef, setSelectedTargets, selectedTargets } = eventStore;
   return (
     <Selecto
@@ -36,6 +37,10 @@ const SelectArea = observer(() => {
           moveableRef.waitToChangeTarget().then(() => {
             moveableRef.dragStart(inputEvent);
           });
+        }
+        // 多选情况默认清除当前选中内容
+        if (e.selected.length) {
+          setCurLayer(null);
         }
         setSelectedTargets?.(e.selected);
       }}

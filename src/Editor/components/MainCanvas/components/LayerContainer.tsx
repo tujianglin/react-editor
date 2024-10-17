@@ -60,8 +60,8 @@ const LayerContainter = observer(({ children, style, layer, containerType }: Lay
         setSelectedTargets(targets);
       }
     }
-    sepPointPos({ e, layer });
     setCurLayer(layer);
+    sepPointPos({ e, layer });
     updateVisible(false);
     // 触发拖拽
     setTimeout(() => {
