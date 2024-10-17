@@ -69,7 +69,7 @@ export class BascLayerItem implements LayerItem {
     backgroundImageIndex: {
       index: PropEnum.backgroundImageIndex,
       type: Type.Int32,
-      value: 0,
+      value: null,
       metaData: '',
     },
     backgroundImageLayout: {

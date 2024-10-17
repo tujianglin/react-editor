@@ -69,7 +69,7 @@ class Properties implements IMyWindow {
   IconScrIndex = {
     index: MyWindowEnum.IconScrIndex,
     type: Type.Int8,
-    value: 0 as const,
+    value: null,
     metaData: '',
   };
   'window.show' = {

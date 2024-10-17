@@ -3,7 +3,7 @@ import eventStore from '@/Editor/store/eventStore';
 import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
 import { LayerItem } from '@/packages/types/component';
 import { $ } from '@/utils';
-import { ColorPicker, Flex, Form, Input, InputNumber, Select, Slider, Switch } from 'antd';
+import { ColorPicker, Form, Input, InputNumber, Select, Slider, Switch } from 'antd';
 import { observer } from 'mobx-react';
 import { useEffect, useState } from 'react';
 import { DraggableRequestParam } from 'react-moveable';
@@ -14,45 +14,40 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
     const child = editorStore.resourceData.find((i) => i.name === properties.backgroundImageSrc.value)?.children;
     const list = child?.map((i, index) => ({ label: i, value: index }));
     setSrcList(list || []);
+    if (!properties.backgroundImageSrc.value) {
+      updateCurLayer<{}>({ id, properties: { backgroundImageIndex: { value: null } } });
+    }
   }, [properties.backgroundImageSrc.value]);
   const { moveableRef } = eventStore!;
   const { updateCurLayer } = editorStore!;
   return (
     <Form labelAlign="left" colon={false} labelCol={{ span: 6 }}>
       <Form.Item label={'名称'}>
-        <Flex align="center">
-          <Input value={name} onChange={(e) => updateCurLayer({ id, name: e.target.value })} />
-        </Flex>
+        <Input value={name} onChange={(e) => updateCurLayer({ id, name: e.target.value })} />
       </Form.Item>
       <Form.Item label={'锁定'}>
-        <Flex align="center">
-          <Switch
-            value={lock}
-            onChange={(e) => {
-              if (e) {
-                updateCurLayer({ id, lock: e, directions: [], edge: [] });
-              } else {
-                // 取消锁定, 删除停靠逻辑
-                updateCurLayer({ id, lock: e, directions: true, edge: true, properties: { dock: { value: 0 } } });
-              }
-            }}
-          />
-        </Flex>
+        <Switch
+          value={lock}
+          onChange={(e) => {
+            if (e) {
+              updateCurLayer({ id, lock: e, directions: [], edge: [] });
+            } else {
+              // 取消锁定, 删除停靠逻辑
+              updateCurLayer({ id, lock: e, directions: true, edge: true, properties: { dock: { value: 0 } } });
+            }
+          }}
+        />
       </Form.Item>
       <Form.Item label={'ID'}>
-        <Flex align="center">
-          <Input value={properties.name.value} disabled />
-        </Flex>
+        <Input value={properties.name.value} disabled />
       </Form.Item>
       <Form.Item label={'启用'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="enable" />
+        <GlobalTreeSelect field="enable">
           <Switch value={properties.enable.value} onChange={(e) => updateCurLayer({ id, properties: { enable: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'宽度'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="width" />
+        <GlobalTreeSelect field="width">
           <InputNumber
             className="w-full"
             value={properties.width.value}
@@ -62,11 +57,10 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
               moveableRef!.request('draggable', { width: Math.round(e) }, true);
             }}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'高度'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="height" />
+        <GlobalTreeSelect field="height">
           <InputNumber
             className="w-full"
             value={properties.height.value}
@@ -76,29 +70,25 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
               moveableRef!.request('draggable', { height: Math.round(e) }, true);
             }}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'X坐标'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="x" />
+        <GlobalTreeSelect field="x">
           <InputNumber className="w-full" value={properties.x.value} onChange={(e) => updateCurLayer({ id, properties: { x: { value: Math.round(e) } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'Y坐标'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="y" />
+        <GlobalTreeSelect field="y">
           <InputNumber className="w-full" value={properties.y.value} onChange={(e) => updateCurLayer({ id, properties: { y: { value: Math.round(e) } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'Z坐标'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="z" />
+        <GlobalTreeSelect field="z">
           <InputNumber className="w-full" value={properties.z.value} onChange={(e) => updateCurLayer({ id, properties: { z: { value: Math.round(e) } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'可见性'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="visibility" />
+        <GlobalTreeSelect field="visibility">
           <Select
             options={[
               { label: '隐藏', value: 0 },
@@ -108,34 +98,31 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
             value={properties.visibility.value}
             onChange={(e) => updateCurLayer({ id, properties: { visibility: { value: e } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'透明度'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="opacity" />
+        <GlobalTreeSelect field="opacity">
           <Slider className="flex-1" min={0} max={1} step={0.1} value={properties.opacity.value} onChange={(e) => updateCurLayer({ id, properties: { opacity: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'背景图'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="backgroundImageSrc" />
+        <GlobalTreeSelect field="backgroundImageSrc">
           <Select
+            allowClear
             value={properties.backgroundImageSrc.value}
             options={editorStore.resourceData}
             fieldNames={{ label: 'name', value: 'name' }}
-            onChange={(e) => updateCurLayer({ id, properties: { backgroundImageSrc: { value: e } } })}
+            onChange={(e) => updateCurLayer({ id, properties: { backgroundImageSrc: { value: e || '' } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'背景图索引'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="backgroundImageIndex" />
+        <GlobalTreeSelect field="backgroundImageIndex">
           <Select value={properties.backgroundImageIndex.value} options={srcList} onChange={(e) => updateCurLayer({ id, properties: { backgroundImageIndex: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'背景图样式'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="backgroundImageLayout" />
+        <GlobalTreeSelect field="backgroundImageLayout">
           <Select
             options={[
               { label: '直接缩放', value: 0 },
@@ -146,53 +133,40 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
             value={properties.backgroundImageLayout.value}
             onChange={(e) => updateCurLayer({ id, properties: { backgroundImageLayout: { value: e } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'背景颜色'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="backgroundColor" />
+        <GlobalTreeSelect field="backgroundColor">
           <ColorPicker
             showText
             allowClear
             value={properties.backgroundColor?.value}
             onChange={(e) => updateCurLayer({ id, properties: { backgroundColor: { value: e.toHex() } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'字体大小'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="fontSize" />
+        <GlobalTreeSelect field="fontSize">
           <InputNumber className="w-full" value={properties.fontSize.value} onChange={(e) => updateCurLayer({ id, properties: { fontSize: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'字体'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="fontFamily" />
+        <GlobalTreeSelect field="fontFamily">
           <Input value={properties.fontFamily.value} onChange={(e) => updateCurLayer({ id, properties: { fontFamily: { value: e.target.value } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'文本颜色'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="textColor" />
-          <ColorPicker
-            showText
-            allowClear
-            value={properties.textColor?.value}
-            onChange={(e) => {
-              updateCurLayer({ id, properties: { textColor: { value: e.toHex() } } });
-            }}
-          />
-        </Flex>
+        <GlobalTreeSelect field="textColor">
+          <ColorPicker showText allowClear value={properties.textColor?.value} onChange={(e) => updateCurLayer({ id, properties: { textColor: { value: e.toHex() } } })} />
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'文本加粗'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="textBold" />
+        <GlobalTreeSelect field="textBold">
           <Switch value={properties.textBold.value} onChange={(e) => updateCurLayer({ id, properties: { textBold: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'文本线样式'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="textLineStyle" />
+        <GlobalTreeSelect field="textLineStyle">
           <Select
             options={[
               { label: '无', value: 0 },
@@ -203,17 +177,15 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
             value={properties.textLineStyle.value}
             onChange={(e) => updateCurLayer({ id, properties: { textLineStyle: { value: e } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'边框圆角'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="borderRadius" />
+        <GlobalTreeSelect field="borderRadius">
           <InputNumber className="w-full" value={properties.borderRadius.value} onChange={(e) => updateCurLayer({ id, properties: { borderRadius: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'边框样式'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="borderStyle" />
+        <GlobalTreeSelect field="borderStyle">
           <Select
             options={[
               { label: '无', value: 0 },
@@ -223,59 +195,50 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
             value={properties.borderStyle.value}
             onChange={(e) => updateCurLayer({ id, properties: { borderStyle: { value: e } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'左内边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="paddingLeft" />
+        <GlobalTreeSelect field="paddingLeft">
           <InputNumber className="w-full" value={properties.paddingLeft.value} onChange={(e) => updateCurLayer({ id, properties: { paddingLeft: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'上内边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="paddingTop" />
+        <GlobalTreeSelect field="paddingTop">
           <InputNumber className="w-full" value={properties.paddingTop.value} onChange={(e) => updateCurLayer({ id, properties: { paddingTop: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'右内边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="paddingRight" />
+        <GlobalTreeSelect field="paddingRight">
           <InputNumber className="w-full" value={properties.paddingRight.value} onChange={(e) => updateCurLayer({ id, properties: { paddingRight: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'下内边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="paddingBottom" />
+        <GlobalTreeSelect field="paddingBottom">
           <InputNumber className="w-full" value={properties.paddingBottom.value} onChange={(e) => updateCurLayer({ id, properties: { paddingBottom: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'左外边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="marginLeft" />
+        <GlobalTreeSelect field="marginLeft">
           <InputNumber className="w-full" value={properties.marginLeft.value} onChange={(e) => updateCurLayer({ id, properties: { marginLeft: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'上外边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="marginTop" />
+        <GlobalTreeSelect field="marginTop">
           <InputNumber className="w-full" value={properties.marginTop.value} onChange={(e) => updateCurLayer({ id, properties: { marginTop: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'右外边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="marginRight" />
+        <GlobalTreeSelect field="marginRight">
           <InputNumber className="w-full" value={properties.marginRight.value} onChange={(e) => updateCurLayer({ id, properties: { marginRight: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'下外边距'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="marginBottom" />
+        <GlobalTreeSelect field="marginBottom">
           <InputNumber className="w-full" value={properties.marginBottom.value} onChange={(e) => updateCurLayer({ id, properties: { marginBottom: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'停靠'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="dock" />
+        <GlobalTreeSelect field="dock">
           <Select
             options={[
               { label: '无', value: 0 },
@@ -380,7 +343,7 @@ const Common = observer(({ id, properties, pid, type, name, lock }: LayerItem) =
               }
             }}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
     </Form>
   );

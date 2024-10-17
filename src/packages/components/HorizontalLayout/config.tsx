@@ -2,7 +2,7 @@ import editorStore from '@/Editor/store/editorStore';
 import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
 import { LayerItem } from '@/packages/types/component';
 import { treeForEach } from '@/utils/tree';
-import { Divider, Flex, Form, Select, Switch } from 'antd';
+import { Divider, Form, Select, Switch } from 'antd';
 import { observer } from 'mobx-react';
 import { IHorizontalLayout } from './default';
 
@@ -18,26 +18,22 @@ const HorizontalLayoutConfig = observer(({ properties, id }: LayerItem<IHorizont
     <Form labelAlign="left" colon={false} labelCol={{ span: 6 }}>
       <Divider className="!mt-0">属性</Divider>
       <Form.Item label={'水平滚动条'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="hScroll" />
+        <GlobalTreeSelect field="hScroll">
           <Switch value={properties.hScroll.value} onChange={(e) => updateCurLayer<IHorizontalLayout>({ id, properties: { hScroll: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'垂直滚动条'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="vScroll" />
+        <GlobalTreeSelect field="vScroll">
           <Switch value={properties.vScroll.value} onChange={(e) => updateCurLayer<IHorizontalLayout>({ id, properties: { vScroll: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'是否换行'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="wrap" />
+        <GlobalTreeSelect field="wrap">
           <Switch value={properties.wrap.value} onChange={(e) => updateCurLayer<IHorizontalLayout>({ id, properties: { wrap: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'对齐方式'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="layoutAlignment" />
+        <GlobalTreeSelect field="layoutAlignment">
           <Select
             value={properties.layoutAlignment.value}
             options={[
@@ -47,13 +43,12 @@ const HorizontalLayoutConfig = observer(({ properties, id }: LayerItem<IHorizont
             ]}
             onChange={(e) => updateCurLayer<IHorizontalLayout>({ id, properties: { layoutAlignment: { value: e } } })}
           />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Form.Item label={'填充元素'}>
-        <Flex align="center">
-          <GlobalTreeSelect field="fillItem" />
+        <GlobalTreeSelect field="fillItem">
           <Select value={properties.fillItem.value} allowClear options={list} onSelect={(e) => updateCurLayer({ id, properties: { fillItem: { value: e } } })} />
-        </Flex>
+        </GlobalTreeSelect>
       </Form.Item>
       <Divider>事件</Divider>
     </Form>

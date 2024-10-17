@@ -9,7 +9,7 @@ const ImageView = observer(({ properties }: LayerItem<IImageView>) => {
   const [src, setSrc] = useState('');
   useEffect(() => {
     const child = editorStore.resourceData.find((i) => i.name === properties.imgSource.value)?.children;
-    child && setSrc(child[properties.imgIndex.value]);
+    child ? setSrc(child[properties.imgIndex.value]) : setSrc('');
   }, [properties.imgSource.value, properties.imgIndex.value]);
   const style = () => {
     const result = {
