@@ -1,0 +1,24 @@
+import editorStore from '@/Editor/store/editorStore';
+import GlobalTreeSelect from '@/packages/helper/GlobalTreeSelect';
+import { LayerItem } from '@/packages/types/component';
+import { Divider, Form, Switch } from 'antd';
+import { observer } from 'mobx-react';
+import { I{{name}} } from './default';
+
+const {{name}}Config = observer(({ id, properties }: LayerItem<I{{name}}>) => {
+  const { updateCurLayer } = editorStore!;
+
+  return (
+    <Form labelAlign="left" colon={false} labelCol=\{{ span: 6 }}>
+      <Divider className="!mt-0">属性</Divider>
+      <Form.Item label={'id'}>
+        <GlobalTreeSelect field="name">
+          <Switch value={properties.name.value} onChange={(e) => updateCurLayer<I{{name}}>({ id, properties: { name: { value: e } } })} />
+        </GlobalTreeSelect>
+      </Form.Item>
+      <Divider>事件</Divider>
+    </Form>
+  );
+});
+
+export default {{name}}Config;

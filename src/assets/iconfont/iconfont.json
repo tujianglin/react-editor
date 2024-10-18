@@ -1,0 +1,65 @@
+{
+  "id": "4704804",
+  "name": "os-react",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "40068083",
+      "name": "align-bottom-two",
+      "font_class": "align-bottom-two",
+      "unicode": "ea42",
+      "unicode_decimal": 59970
+    },
+    {
+      "icon_id": "40068108",
+      "name": "align-right-two",
+      "font_class": "align-right-two",
+      "unicode": "ea43",
+      "unicode_decimal": 59971
+    },
+    {
+      "icon_id": "40068110",
+      "name": "align-left-two",
+      "font_class": "align-left-two",
+      "unicode": "ea44",
+      "unicode_decimal": 59972
+    },
+    {
+      "icon_id": "40068119",
+      "name": "align-horizontal-center-two",
+      "font_class": "align-horizontal-center-two",
+      "unicode": "ea45",
+      "unicode_decimal": 59973
+    },
+    {
+      "icon_id": "40068172",
+      "name": "align-vertical-center-two",
+      "font_class": "align-vertical-center-two",
+      "unicode": "ea46",
+      "unicode_decimal": 59974
+    },
+    {
+      "icon_id": "40068174",
+      "name": "align-top-two",
+      "font_class": "align-top-two",
+      "unicode": "ea47",
+      "unicode_decimal": 59975
+    },
+    {
+      "icon_id": "40068344",
+      "name": "horizontal-spacing-between-items",
+      "font_class": "horizontal-spacing-between-items",
+      "unicode": "ea4a",
+      "unicode_decimal": 59978
+    },
+    {
+      "icon_id": "40068804",
+      "name": "vertical-spacing-between-items",
+      "font_class": "vertical-spacing-between-items",
+      "unicode": "ea54",
+      "unicode_decimal": 59988
+    }
+  ]
+}

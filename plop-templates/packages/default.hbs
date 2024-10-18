@@ -1,0 +1,55 @@
+import { AbstractDefinition } from '@/packages/core/AbstractDefinition';
+import { BascLayerItem } from '@/packages/utils/config';
+import { generateID } from '@/utils';
+import { assign } from 'lodash-es';
+import {{name}}Config from './config';
+import {{name}} from './index';
+
+/* 私有属性 */
+export interface I{{name}} {
+}
+
+/* 私有属性枚举 */
+enum {{name}}PropEnum {
+}
+
+class Properties implements I{{name}} {
+}
+
+class {{name}}Layer extends BascLayerItem {
+  constructor() {
+    super();
+    this.classType = 0; // 需修改
+    this.type = '{{name}}';
+    this.name = '组件'
+    this.properties.name.value = generateID();
+    this.properties.width.value = 100;
+    this.properties.height.value = 32;
+    this.properties = assign(this.properties, new Properties());
+  }
+}
+
+export default class {{name}}Default extends AbstractDefinition<any, {{name}}Layer> {
+  getBaseInfo() {
+    return {
+      order: 0,
+      name: '组件',
+      type: '{{name}}',
+    };
+  }
+  getInitConfig(): {{name}}Layer {
+    return { ...new {{name}}Layer() };
+  }
+  getComponent() {
+    return {
+      type: '{{name}}',
+      comp: {{name}},
+    };
+  }
+  getComponentConfig() {
+    return {
+      type: '{{name}}Config',
+      comp: {{name}}Config,
+    };
+  }
+}
